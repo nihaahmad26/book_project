@@ -1,0 +1,79 @@
+source my_environments/djangoPy3Env/Scripts/activate
+cd python/django/Books_Authors/
+django-admin startproject book_project
+cd book_project/
+python manage.py runserver
+python manage.py startapp book_app
+code .
+
+##After setting up framework and creating models##
+
+python manage.py makemigrations
+
+##should get this message
+Migrations for 'book_app':
+  book_app\migrations\0001_initial.py
+    - Create model Book
+    - Create model Author
+(djangoPy3Env)##
+
+python manage.py migrate
+python manage.py shell
+>>> from book_app.models import Book
+>>> Book.objects.create(title="C Sharp",description="C Sharp")
+>>> Book.objects.create(title="Java",description="Java")
+>>> Book.objects.create(title="Python",description="Python")
+>>> Book.objects.create(title="PHP",description="PHP")
+>>> Book.objects.create(title="Ruby",description=" Ruby")
+>>> exit()
+
+python manage.py shell
+>>> from book_app.models import Author
+>>> Author.objects.create(first_name="Jane",last_name="Austen")
+>>> Author.objects.create(first_name="Emily",last_name="Dickinson")
+>>> Author.objects.create(first_name="Fyodor",last_name=" Dostoevsky")
+>>> Author.objects.create(first_name="William",last_name="Shakespeare")
+>>> Author.objects.create(first_name="Lau",last_name="Tzu")
+>>> exit()
+
+##added new notes to Author
+
+python manage.py makemigrations
+python manage.py migrate
+python manage.py shell
+>>> from book_app.models import *
+>>> c = Book.objects.get(id=1)
+>>> c.title = "C#"
+>>> c.save()
+>>> Book.objects.get(id=1).__dict__ 
+>>> c= Author.objects.get(id=4)
+>>> c.first_name="Bill"
+>>> c.save()
+>>> > c.save()
+>>> Author.objects.get(id=4).__dict__ 
+
+>>> some_book = Book.objects.get(id=1)
+>>> some_book.author = Author.objects.get(id=1)
+>>> second_book = Book.objects.get(id=2)
+>>> second_book.author = Author.objects.get(id=1)
+
+>>> some_book.author = Author.objects.get(id=2)
+>>> second_book.author = Author.objects.get(id=2)
+>>> third_book = Book.objects.get(id=3)
+>>> third_book.author = Author.objects.get(id=2)
+
+>>> some_book.author = Author.objects.get(id=3)
+>>> second_book.author = Author.objects.get(id=3)
+>>> third_book.author = Author.objects.get(id=3)
+>>> fourth_book = Book.objects.get(id=4)
+>>> fourth_book.author = Author.objects.get(id=3)
+
+>>> some_book.author = Author.objects.get(id=4)
+>>> second_book.author = Author.objects.get(id=4)
+>>> third_book.author = Author.objects.get(id=4)
+>>> fourth_book.author = Author.objects.get(id=4)
+>>> last_book = Book.objects.get(id=5)
+>>> last_book.author = Author.objects.get(id=4)
+
+>>> third_book.author
+>>> 
